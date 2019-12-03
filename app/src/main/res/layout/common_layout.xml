@@ -33,4 +33,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <Switch
+        android:id="@+id/favorito"
+        android:textOn="On"
+        android:textOff="Off"
+        android:text="FAVORITO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

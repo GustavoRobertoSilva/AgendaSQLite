@@ -1,11 +1,13 @@
 package br.edu.ifsp.agendasqlite.data;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -91,7 +93,13 @@ public class ContatoAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ContatoViewHolder holder, int position) {
-            holder.nome.setText(contactListFiltered.get(position).getNome());
+
+        holder.nome.setText(contactListFiltered.get(position).getNome());
+            if (contactListFiltered.get(position).getFavorito() == 0) {
+                holder.image.setImageResource(R.drawable.star_off);
+            }else {
+                holder.image.setImageResource(R.drawable.ic_star_black);
+            }
     }
 
     @Override
@@ -138,11 +146,15 @@ public class ContatoAdapter
             implements View.OnClickListener
     {
         final TextView nome;
+        final ImageView image;
 
         public ContatoViewHolder(@NonNull View itemView) {
             super(itemView);
             nome = (TextView) itemView.findViewById(R.id.nome);
             itemView.setOnClickListener(this);
+            image = (ImageView) itemView.findViewById(R.id.imageView);
+            System.out.println(image);
+
         }
 
         @Override
