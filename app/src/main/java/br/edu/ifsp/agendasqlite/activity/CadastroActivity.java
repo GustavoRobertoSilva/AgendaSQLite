@@ -41,11 +41,13 @@ public class CadastroActivity extends AppCompatActivity {
             ContatoDAO dao = new ContatoDAO(this);
 
             String nome = ((EditText) findViewById(R.id.editTextNome)).getText().toString();
+            String dataNascimento = ((EditText) findViewById(R.id.editTextDataNascimento)).getText().toString();
             String fone = ((EditText) findViewById(R.id.editTextFone)).getText().toString();
             String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
             Integer favorito = ((Switch) findViewById(R.id.favorito)).isChecked() ? 1 : 0 ;
+            String foneContato = ((EditText) findViewById(R.id.editTextFoneContato)).getText().toString();
 
-            Contato c = new Contato(nome,fone,email,favorito);
+            Contato c = new Contato(nome, dataNascimento, fone, foneContato, email,favorito);
 
             int idContato = (int) dao.incluirContato(c);
             c.setId(idContato);

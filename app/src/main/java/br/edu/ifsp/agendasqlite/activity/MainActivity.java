@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setClickListener(new ContatoAdapter.ItemClickListener() {
             @Override
             public void onItemClick(int position) {
+
                 final Contato c = adapter.getContactListFiltered().get(position);
 
                 Intent i = new Intent(getApplicationContext(), DetalheActivity.class);

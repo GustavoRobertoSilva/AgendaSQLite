@@ -1,7 +1,5 @@
 package br.edu.ifsp.agendasqlite.data;
 
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +96,7 @@ public class ContatoAdapter
             if (contactListFiltered.get(position).getFavorito() == 0) {
                 holder.image.setImageResource(R.drawable.star_off);
             }else {
-                holder.image.setImageResource(R.drawable.ic_star_black);
+                holder.image.setImageResource(R.drawable.star_on);
             }
     }
 
@@ -119,6 +117,9 @@ public class ContatoAdapter
                     List<Contato> filteredList = new ArrayList<>();
                     for (Contato row : contatos) {
                         if (row.getNome().toLowerCase().contains(charString.toLowerCase()) ) {
+                            filteredList.add(row);
+                        }
+                        if (row.getEmail().toLowerCase().contains(charString.toLowerCase()) ) {
                             filteredList.add(row);
                         }
                     }
@@ -152,7 +153,7 @@ public class ContatoAdapter
             super(itemView);
             nome = (TextView) itemView.findViewById(R.id.nome);
             itemView.setOnClickListener(this);
-            image = (ImageView) itemView.findViewById(R.id.imageView);
+            image = (ImageView) itemView.findViewById(R.id.idImageFav);
             System.out.println(image);
 
         }
@@ -165,8 +166,7 @@ public class ContatoAdapter
     }
 
 
-    public  interface ItemClickListener
-    {
+    public  interface ItemClickListener{
         void onItemClick(int position);
     }
 

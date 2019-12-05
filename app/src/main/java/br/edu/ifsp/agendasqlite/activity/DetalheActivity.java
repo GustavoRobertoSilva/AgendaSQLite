@@ -33,11 +33,17 @@ public class DetalheActivity extends AppCompatActivity {
             EditText fone = findViewById(R.id.editTextFone);
             fone.setText(c.getFone());
 
+            EditText foneContato = findViewById(R.id.editTextFoneContato);
+            foneContato.setText(c.getFoneContato());
+
             EditText email = findViewById(R.id.editTextEmail);
             email.setText(c.getEmail());
 
             Switch favorito = findViewById(R.id.favorito);
             favorito.setChecked(c.getFavorito() == 1 ? true : false);
+
+            EditText dataNascimento = findViewById(R.id.editTextDataNascimento);
+            dataNascimento.setText(c.getDataNascimento());
         }
 
 
@@ -64,12 +70,16 @@ public class DetalheActivity extends AppCompatActivity {
             ContatoDAO dao = new ContatoDAO(this);
 
             String nome = ((EditText) findViewById(R.id.editTextNome)).getText().toString();
+            String dataNascimento = ((EditText) findViewById(R.id.editTextDataNascimento)).getText().toString();
             String fone = ((EditText) findViewById(R.id.editTextFone)).getText().toString();
             String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
             Integer favorito = ((Switch) findViewById(R.id.favorito)).isChecked() ? 1 : 0 ;
+            String foneContato = ((EditText) findViewById(R.id.editTextFoneContato)).getText().toString();
 
             c.setNome(nome);
             c.setFone(fone);
+            c.setDataNascimento(dataNascimento);
+            c.setFoneContato(foneContato);
             c.setEmail(email);
             c.setFavorito(favorito);
 

@@ -6,7 +6,9 @@ public class Contato implements Serializable {
 
     private int id;
     private String nome;
+    private String dataNascimento;
     private String fone;
+    private String foneContato;
     private String email;
     private int favorito = 0;
 
@@ -17,9 +19,11 @@ public class Contato implements Serializable {
         this.id = id;
     }
 
-    public Contato(String nome, String fone, String email, int favorito) {
+    public Contato(String nome, String dataNascimento, String fone, String foneContato, String email, int favorito) {
         this.nome = nome;
         this.fone = fone;
+        this.dataNascimento = dataNascimento;
+        this.foneContato = foneContato;
         this.email = email;
         this.favorito = favorito;
     }
@@ -72,5 +76,34 @@ public class Contato implements Serializable {
 
     public void setFavorito(int favorito) {
         this.favorito = favorito;
+    }
+
+    public String getFoneContato() {
+        return foneContato;
+    }
+
+    public void setFoneContato(String foneContato) {
+        this.foneContato = foneContato;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    @Override
+    public String toString() {
+        return "Contato{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", dataNascimento='" + dataNascimento + '\'' +
+                ", fone='" + fone + '\'' +
+                ", foneContato='" + foneContato + '\'' +
+                ", email='" + email + '\'' +
+                ", favorito=" + favorito +
+                '}';
     }
 }

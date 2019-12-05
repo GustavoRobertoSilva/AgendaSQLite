@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_alterarContato"
         android:orderInCategory="100"
-        android:title="Alterar"
+        android:title="@string/alterar"
         android:icon="@android:drawable/ic_menu_save"
         app:showAsAction="always" />
 
@@ -13,7 +13,7 @@
     <item
         android:id="@+id/action_excluirContato"
         android:orderInCategory="100"
-        android:title="Excluir"
+        android:title="@string/excluir"
         android:icon="@android:drawable/ic_menu_delete"
         app:showAsAction="always" />
 
