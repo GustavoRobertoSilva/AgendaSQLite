@@ -19,13 +19,13 @@ class SQLiteHelper extends SQLiteOpenHelper {
     static final String KEY_FAVORITO = "favorito";
     static final String KEY_DATA_NASCIMENTO = "data_nascimento";
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
 
     private static final String CREATE_TABLE_V1 = "CREATE TABLE " + TABLE_NAME + " ("
                                                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                + KEY_NOME + " TEXT, "
                                                + KEY_FONE + " TEXT, "
-                                               + KEY_EMAIL + " TEXT  );";
+                                               + KEY_EMAIL + " TEXT );";
 
     private static final String CREATE_TABLE_V2 = "CREATE TABLE " + TABLE_NAME + " ("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -58,7 +58,9 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_TABLE_V4);
+            String createTable = CREATE_TABLE_V1;
+            System.out.println("CRIANDO TABELA [ "+ createTable+ " ]" );
+            db.execSQL(createTable);
 
     }
 
@@ -68,23 +70,26 @@ class SQLiteHelper extends SQLiteOpenHelper {
         System.out.println("Versao Atual [ "+ oldVersion  + " ]");
         System.out.println("Criando Nova Coluna para Versao [ "+ newVersion  + " ]");
 
-        if(oldVersion < 2) {
+        /*
+        if(oldVersion < newVersion) {
             System.out.println("Criando Coluna [ "+KEY_FAVORITO + " ]");
             String sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FAVORITO + " INTEGER";
             db.execSQL(sql);
         }
 
-        if(oldVersion < 3) {
+        if(oldVersion < newVersion) {
             System.out.println("Criando Coluna [ "+KEY_FONE_CONTATO + " ]");
             String sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FONE_CONTATO + " TEXT";
             db.execSQL(sql);
         }
 
-        if(oldVersion < 4) {
+        if(oldVersion < newVersion) {
             System.out.println("Criando Coluna [ "+KEY_DATA_NASCIMENTO + " ]");
             String sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_DATA_NASCIMENTO + " TEXT";
             db.execSQL(sql);
         }
+        */
+
 
     }
 }
