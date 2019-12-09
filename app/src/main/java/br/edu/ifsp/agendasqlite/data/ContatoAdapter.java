@@ -1,5 +1,6 @@
 package br.edu.ifsp.agendasqlite.data;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,8 @@ public class ContatoAdapter
     public void onBindViewHolder(@NonNull ContatoViewHolder holder, int position) {
 
         holder.nome.setText(contactListFiltered.get(position).getNome());
+//        holder.image.setOnClickListener();
+
             if (contactListFiltered.get(position).getFavorito() == 0) {
                 holder.image.setImageResource(R.drawable.star_off);
             }else {
@@ -154,6 +157,23 @@ public class ContatoAdapter
             nome = (TextView) itemView.findViewById(R.id.nome);
             itemView.setOnClickListener(this);
             image = (ImageView) itemView.findViewById(R.id.idImageFav);
+
+            View.OnClickListener imageView = new View.OnClickListener() {
+
+                public void onClick(View v) {
+                    Log.d(ContatoAdapter.class.getName(),"Clicou");
+
+                    if(image.getTag().equals(R.drawable.star_off)) {
+                        image.setImageResource(R.drawable.star_on);
+                    }else{
+                        image.setImageResource(R.drawable.star_off);
+                    }
+
+                    Log.d(ContatoAdapter.class.getName(),"Clicou 2");
+
+                }
+            };
+            image.setOnClickListener(imageView);
             System.out.println(image);
 
         }

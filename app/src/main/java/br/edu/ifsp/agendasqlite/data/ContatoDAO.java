@@ -43,6 +43,7 @@ public class ContatoDAO {
            c.setNome(cursor.getString(1));
            c.setFone(cursor.getString(2));
            c.setEmail(cursor.getString(3));
+
            c.setFavorito(cursor.getInt(4));
            c.setFoneContato(cursor.getString(5));
            c.setDataNascimento(cursor.getString(6));

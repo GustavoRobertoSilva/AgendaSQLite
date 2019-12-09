@@ -3,6 +3,7 @@ package br.edu.ifsp.agendasqlite.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -19,7 +20,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
     static final String KEY_FAVORITO = "favorito";
     static final String KEY_DATA_NASCIMENTO = "data_nascimento";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
 
     private static final String CREATE_TABLE_V1 = "CREATE TABLE " + TABLE_NAME + " ("
                                                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -27,29 +28,11 @@ class SQLiteHelper extends SQLiteOpenHelper {
                                                + KEY_FONE + " TEXT, "
                                                + KEY_EMAIL + " TEXT );";
 
-    private static final String CREATE_TABLE_V2 = "CREATE TABLE " + TABLE_NAME + " ("
-            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + KEY_NOME + " TEXT, "
-            + KEY_FONE + " TEXT, "
-            + KEY_EMAIL + " TEXT, "
-            + KEY_FAVORITO + " INTEGER);";
+    private static final String ALTER_TABLE_V2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FAVORITO + " INTEGER";
 
-    private static final String CREATE_TABLE_V3 = "CREATE TABLE " + TABLE_NAME + " ("
-            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + KEY_NOME + " TEXT, "
-            + KEY_FONE + " TEXT, "
-            + KEY_EMAIL + " TEXT ,"
-            + KEY_FAVORITO + " INTEGER, "
-            + KEY_FONE_CONTATO + " TEXT  );" ;
+    private static final String ALTER_TABLE_V3 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FONE_CONTATO + " TEXT";
 
-    private static final String CREATE_TABLE_V4 = "CREATE TABLE " + TABLE_NAME + " ("
-            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + KEY_NOME + " TEXT, "
-            + KEY_FONE + " TEXT, "
-            + KEY_EMAIL + " TEXT ,"
-            + KEY_FAVORITO + " INTEGER, "
-            + KEY_FONE_CONTATO + " TEXT, "
-            + KEY_DATA_NASCIMENTO + " TEXT  );" ;
+    private static final String ALTER_TABLE_V4 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_DATA_NASCIMENTO + " TEXT";
 
 
     public SQLiteHelper(@Nullable Context context) {
@@ -58,38 +41,41 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-            String createTable = CREATE_TABLE_V1;
-            System.out.println("CRIANDO TABELA [ "+ createTable+ " ]" );
-            db.execSQL(createTable);
+        Log.d(SQLiteHelper.class.getName(),"Start - onCreate");
+        Log.d(SQLiteHelper.class.getName(),"CRIANDO TABELA [ "+ CREATE_TABLE_V1+ " ]" );
 
+        db.execSQL(CREATE_TABLE_V1);
+        db.execSQL(ALTER_TABLE_V2);
+        db.execSQL(ALTER_TABLE_V3);
+        db.execSQL(ALTER_TABLE_V4);
+
+        Log.d(SQLiteHelper.class.getName(),"VERSAO BANCO [ "+ db.getVersion()+" ]");
+        Log.d(SQLiteHelper.class.getName(),"End - onCreate");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        System.out.println("Versao Atual [ "+ oldVersion  + " ]");
-        System.out.println("Criando Nova Coluna para Versao [ "+ newVersion  + " ]");
+        Log.d(SQLiteHelper.class.getName(),"Start - OnUpgrade");
+        Log.d(SQLiteHelper.class.getName(),"Versao Atual [ "+ oldVersion  + " ]");
+        Log.d(SQLiteHelper.class.getName(),"Criando Nova Coluna para Versao [ "+ newVersion  + " ]");
 
-        /*
-        if(oldVersion < newVersion) {
-            System.out.println("Criando Coluna [ "+KEY_FAVORITO + " ]");
-            String sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FAVORITO + " INTEGER";
-            db.execSQL(sql);
-        }
-
-        if(oldVersion < newVersion) {
-            System.out.println("Criando Coluna [ "+KEY_FONE_CONTATO + " ]");
-            String sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_FONE_CONTATO + " TEXT";
-            db.execSQL(sql);
-        }
-
-        if(oldVersion < newVersion) {
-            System.out.println("Criando Coluna [ "+KEY_DATA_NASCIMENTO + " ]");
-            String sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + KEY_DATA_NASCIMENTO + " TEXT";
-            db.execSQL(sql);
-        }
-        */
-
+//        if(oldVersion < 2 && newVersion == 2 ) {
+//            Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_FAVORITO + " ]");
+//            db.execSQL(ALTER_TABLE_V2);
+//        }
+//
+//        if(oldVersion < 3 && newVersion == 3 ) {
+//            Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_FONE_CONTATO + " ]");
+//            db.execSQL(ALTER_TABLE_V3);
+//        }
+//
+//        if(oldVersion < 4 && newVersion == 4 ) {
+//            System.out.println();
+//            Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_DATA_NASCIMENTO + " ]");
+//            db.execSQL(ALTER_TABLE_V4);
+//        }
+        Log.d(SQLiteHelper.class.getName(),"End - OnUpgrade");
 
     }
 }
