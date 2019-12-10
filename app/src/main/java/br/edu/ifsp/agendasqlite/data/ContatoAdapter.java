@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import br.edu.ifsp.agendasqlite.R;
 import br.edu.ifsp.agendasqlite.model.Contato;
@@ -26,12 +29,12 @@ public class ContatoAdapter
 
     static List<Contato> contatos;
     List<Contato> contactListFiltered;
+    ContatoDAO contatoDAO;
 
     private static ItemClickListener clickListener;
 
 
-    public void adicionaContatoAdapter(Contato c)
-    {
+    public void adicionaContatoAdapter(Contato c){
         contatos.add(0,c);
 
         Collections.sort(contatos, new Comparator<Contato>() {
@@ -42,13 +45,9 @@ public class ContatoAdapter
         });
 
         notifyDataSetChanged();
-
     }
 
-    public void atualizaContatoAdapter(Contato c)
-    {
-
-
+    public void atualizaContatoAdapter(Contato c) {
         contatos.set(contatos.indexOf(c),c);
         notifyItemChanged(contatos.indexOf(c));
 
@@ -69,14 +68,17 @@ public class ContatoAdapter
         return contactListFiltered;
     }
 
-    public void setClickListener(ItemClickListener itemClickListener)
-    {
+    public void setClickListener(ItemClickListener itemClickListener){
         clickListener = itemClickListener;
-
     }
 
-    public ContatoAdapter(List<Contato> contatos)
-    {
+    public ContatoAdapter(List<Contato> contatos, ContatoDAO dao){
+        this.contatos = contatos;
+        contactListFiltered=contatos;
+        this.contatoDAO = dao;
+    }
+
+    public ContatoAdapter(List<Contato> contatos){
         this.contatos = contatos;
         contactListFiltered=contatos;
     }
@@ -93,14 +95,33 @@ public class ContatoAdapter
     @Override
     public void onBindViewHolder(@NonNull ContatoViewHolder holder, int position) {
 
+        final Contato contato = contactListFiltered.get(position);
         holder.nome.setText(contactListFiltered.get(position).getNome());
-//        holder.image.setOnClickListener();
 
             if (contactListFiltered.get(position).getFavorito() == 0) {
                 holder.image.setImageResource(R.drawable.star_off);
+                holder.image.setTag(R.drawable.star_off);
             }else {
                 holder.image.setImageResource(R.drawable.star_on);
+                holder.image.setTag(R.drawable.star_on);
             }
+
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(contato.getFavorito()==1) {
+                        contato.setFavorito(0);
+                    }
+                    else{
+                        contato.setFavorito(1);
+                    }
+
+                    contatoDAO.alterarContato(contato);
+                    notifyDataSetChanged();
+                }
+            });
+
     }
 
     @Override
@@ -113,17 +134,20 @@ public class ContatoAdapter
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
+
                 String charString = constraint.toString();
                 if (charString.isEmpty()) {
                     contactListFiltered = contatos;
                 } else {
                     List<Contato> filteredList = new ArrayList<>();
                     for (Contato row : contatos) {
-                        if (row.getNome().toLowerCase().contains(charString.toLowerCase()) ) {
+                        if (row.getNome().toLowerCase().contains(charString.toLowerCase()) || row.getEmail().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
+                            continue;
                         }
                         if (row.getEmail().toLowerCase().contains(charString.toLowerCase()) ) {
                             filteredList.add(row);
+                            continue;
                         }
                     }
                     contactListFiltered = filteredList;
@@ -161,21 +185,21 @@ public class ContatoAdapter
             View.OnClickListener imageView = new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    Log.d(ContatoAdapter.class.getName(),"Clicou");
 
-                    if(image.getTag().equals(R.drawable.star_off)) {
+                    Integer resource = (Integer) image.getTag();
+
+                    if(resource.equals(R.drawable.star_off)) {
                         image.setImageResource(R.drawable.star_on);
+                        image.setTag(R.drawable.star_on);
+                        Log.d(ContatoAdapter.class.getName(),"Adicionando Favoritos");
                     }else{
                         image.setImageResource(R.drawable.star_off);
+                        image.setTag(R.drawable.star_off);
+                        Log.d(ContatoAdapter.class.getName(),"Removendo Favoritos");
                     }
-
-                    Log.d(ContatoAdapter.class.getName(),"Clicou 2");
-
                 }
             };
             image.setOnClickListener(imageView);
-            System.out.println(image);
-
         }
 
         @Override

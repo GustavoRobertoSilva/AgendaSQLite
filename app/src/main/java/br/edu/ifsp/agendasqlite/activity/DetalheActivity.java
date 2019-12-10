@@ -84,8 +84,7 @@ public class DetalheActivity extends AppCompatActivity {
             c.setFavorito(favorito);
 
             dao.alterarContato(c);
-            Log.d("ID: ", Integer.toString(c.getId()));
-            Log.d("NOME: ",c.getNome());
+            Log.d("Contato Alterado ", c.toString());
 
             MainActivity.adapter.atualizaContatoAdapter(c);
 
@@ -101,7 +100,6 @@ public class DetalheActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(),"Contato excluído",Toast.LENGTH_LONG).show();
             finish();
-
         }
 
 

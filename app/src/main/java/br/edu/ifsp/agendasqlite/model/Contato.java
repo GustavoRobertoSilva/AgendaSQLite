@@ -1,6 +1,7 @@
 package br.edu.ifsp.agendasqlite.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Contato implements Serializable {
 
@@ -19,7 +20,7 @@ public class Contato implements Serializable {
         this.id = id;
     }
 
-    public Contato(String nome, String dataNascimento, String fone, String foneContato, String email, int favorito) {
+    public Contato(String nome, String fone, String email, int favorito, String foneContato, String dataNascimento) {
         this.nome = nome;
         this.fone = fone;
         this.dataNascimento = dataNascimento;
@@ -28,15 +29,6 @@ public class Contato implements Serializable {
         this.favorito = favorito;
     }
 
-    public boolean equals(Object obj)
-    {
-        Contato c2= (Contato) obj;
-        if (this.id ==c2.getId())
-            return true;
-           else
-            return false;
-
-    }
 
     public int getId() {
         return id;
@@ -86,13 +78,23 @@ public class Contato implements Serializable {
         this.foneContato = foneContato;
     }
 
-    public String getDataNascimento() {
-        return dataNascimento;
+    public String getDataNascimento() {return dataNascimento;}
+
+    public void setDataNascimento(String dataNascimento) {this.dataNascimento = dataNascimento;}
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getId(), getNome(), getDataNascimento(), getFone(), getFoneContato(), getEmail(), getFavorito());
+//    }
+
+    public boolean equals(Object obj) {
+        Contato c2 = (Contato) obj;
+        if (this.id == c2.getId())
+            return true;
+        else
+            return false;
     }
 
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
 
     @Override
     public String toString() {

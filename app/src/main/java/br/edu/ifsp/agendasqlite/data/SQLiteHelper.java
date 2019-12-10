@@ -60,21 +60,23 @@ class SQLiteHelper extends SQLiteOpenHelper {
         Log.d(SQLiteHelper.class.getName(),"Versao Atual [ "+ oldVersion  + " ]");
         Log.d(SQLiteHelper.class.getName(),"Criando Nova Coluna para Versao [ "+ newVersion  + " ]");
 
-//        if(oldVersion < 2 && newVersion == 2 ) {
-//            Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_FAVORITO + " ]");
-//            db.execSQL(ALTER_TABLE_V2);
-//        }
-//
-//        if(oldVersion < 3 && newVersion == 3 ) {
-//            Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_FONE_CONTATO + " ]");
-//            db.execSQL(ALTER_TABLE_V3);
-//        }
-//
-//        if(oldVersion < 4 && newVersion == 4 ) {
-//            System.out.println();
-//            Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_DATA_NASCIMENTO + " ]");
-//            db.execSQL(ALTER_TABLE_V4);
-//        }
+        for (int i = oldVersion + 1; i <= newVersion; i++) {
+            switch (i) {
+                case 2:
+                    Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_FAVORITO + " ]");
+                    db.execSQL(ALTER_TABLE_V2);
+                    break;
+                case 3:
+                    Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_FONE_CONTATO + " ]");
+                    db.execSQL(ALTER_TABLE_V3);
+                    break;
+                case 4:
+                    Log.d(SQLiteHelper.class.getName(),"Criando Coluna [ "+KEY_DATA_NASCIMENTO + " ]");
+                    db.execSQL(ALTER_TABLE_V4);
+                    break;
+            }
+        }
+
         Log.d(SQLiteHelper.class.getName(),"End - OnUpgrade");
 
     }

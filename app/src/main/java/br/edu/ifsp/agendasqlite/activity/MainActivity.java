@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dao=new ContatoDAO(this);
+        dao= new ContatoDAO(this);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         contatos = dao.listaContatos();
 
-        adapter = new ContatoAdapter(contatos);
+        adapter = new ContatoAdapter(contatos, dao);
 
         recyclerView.setAdapter(adapter);
 
@@ -115,10 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
-
-
-
-
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
